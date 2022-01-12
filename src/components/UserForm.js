@@ -16,24 +16,26 @@ const UserForm = (props) => {
     const [confirmedPassword, setConfirmedPassword] = useState("")
     const [conPasswordError, setConPWerror] = useState("")
 
-    const createUser = (e) => {
-        handleSubmit(e)
+    const [submitError, setSubmitMessage] = useState("")
 
+    const createUser = (e) => {
         e.preventDefault();
-        if (firstNameError || lastNameError || emailError || passwordError || conPasswordError) {
-            console.log("error")
+        let isEmpty = false;
+
+        for (let i = 0; i < e.target.length; i++) {
+            if (e.target[i].value === "") {
+                isEmpty = true
+            }
+        }
+
+        if (isEmpty || firstNameError || lastNameError || emailError || passwordError || conPasswordError) {
+            setSubmitMessage("fix the error!")
         } else {
             const newUser = { firstName, lastName, email, password, confirmedPassword };
-            console.log(`Welcome ${newUser.lastName}`)
+            setSubmitMessage(`Welcome ${newUser.lastName}`)
         }
     }
 
-    const handleSubmit = (e) => {
-        const list = e.target;
-        list.filter((ele) => {
-            return ele.value !== "";
-        })
-    }
 
     const handleName = (e) => {
         if (e.target.id === "firstname") {
@@ -53,6 +55,7 @@ const UserForm = (props) => {
         }
     }
 
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
         if (e.target.value.length < 5) {
@@ -62,6 +65,7 @@ const UserForm = (props) => {
         }
     }
 
+
     const handlePassword = (e) => {
         setPassword(e.target.value);
         if (e.target.value.length < 8) {
@@ -70,6 +74,7 @@ const UserForm = (props) => {
             setPWerror("");
         }
     }
+
 
     const handleConPassword = (e) => {
         setConfirmedPassword(e.target.value);
@@ -81,6 +86,7 @@ const UserForm = (props) => {
             setConPWerror("");
         }
     }
+
 
     return (
         <>
@@ -96,6 +102,7 @@ const UserForm = (props) => {
                             : ''
                     }
                 </div>
+
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>Last Name</label>
                     <div className='col-sm-4'>
@@ -107,6 +114,7 @@ const UserForm = (props) => {
                             : ''
                     }
                 </div>
+
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>Email</label>
                     <div className='col-sm-4'>
@@ -119,6 +127,7 @@ const UserForm = (props) => {
                             : ''
                     }
                 </div>
+
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>Password</label>
                     <div className='col-sm-4'>
@@ -131,6 +140,7 @@ const UserForm = (props) => {
                             : ''
                     }
                 </div>
+
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>Confirm Password</label>
                     <div className='col-sm-4'>
@@ -143,7 +153,13 @@ const UserForm = (props) => {
                             : ''
                     }
                 </div>
+
                 <input type="submit" value="Create"></input>
+                {
+                    createUser
+                        ? <p>{submitError}</p>
+                        : ""
+                }
             </form>
         </>
     )
