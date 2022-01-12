@@ -8,7 +8,7 @@ const UserForm = (props) => {
     const [lastNameError, setLNerror] = useState("")
 
     const [email, setEmail] = useState("")
-    const [emailError, setEmailerror] = useState("")
+    const [emailError, setEmailError] = useState("")
 
     const [password, setPassword] = useState("")
     const [passwordError, setPWerror] = useState("")
@@ -59,9 +59,11 @@ const UserForm = (props) => {
     const handleEmail = (e) => {
         setEmail(e.target.value);
         if (e.target.value.length < 5) {
-            setEmailerror("Email must be at least 5 characters")
+            setEmailError("Email must be at least 5 characters")
+        } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
+            setEmailError("Email invalid")
         } else {
-            setEmailerror("");
+            setEmailError("");
         }
     }
 
