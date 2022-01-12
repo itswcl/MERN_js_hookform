@@ -2,21 +2,32 @@ import React, { useState } from 'react'
 
 const UserForm = (props) => {
     const [firstName, setFirstName] = useState("")
-    const [firstNameError, setFNerror] = useState("")
-
     const [lastName, setLastName] = useState("")
-    const [lastNameError, setLNerror] = useState("")
-
     const [email, setEmail] = useState("")
-    const [emailError, setEmailError] = useState("")
-
     const [password, setPassword] = useState("")
-    const [passwordError, setPWerror] = useState("")
-
     const [confirmedPassword, setConfirmedPassword] = useState("")
-    const [conPasswordError, setConPWerror] = useState("")
+    // like personInfo.firstName etc
 
+    // setPersonInfo({firstName: e.target.value})
+    // setPersonInfo({lastName: e.target.value})
+
+    const [firstNameError, setFNerror] = useState("")
+    const [lastNameError, setLNerror] = useState("")
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPWerror] = useState("")
+    const [conPasswordError, setConPWerror] = useState("")
     const [submitError, setSubmitMessage] = useState("")
+    // like infoError.FNerror etc
+    // const [infoError, setInfoError] = useState({
+    //     FNerror: "",
+    //     LNerror: "",
+    //     emailError: "",
+    //     PWerror: "",
+    //     conPWerror: "",
+    //     sumbitError: "",
+    // })
+    // setInfoError({FNerror: e.target.value})
+
 
     const createUser = (e) => {
         e.preventDefault();
@@ -88,15 +99,33 @@ const UserForm = (props) => {
             setConPWerror("");
         }
     }
+    const [personInfo, setPersonInfo] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmedPassword: "",
+    })
 
+    const changeInput = (e) => {
+        setPersonInfo({
+            // grab the personInfo from default
+            ...personInfo,
+            // to get key from input e.target.name
+            // to set value from e.target.value
+            [e.target.name]:e.target.value
+        })
+    }
 
     return (
         <>
+        {JSON.stringify(personInfo)}
+
             <form onSubmit={createUser} className='mx-auto' style={{ width: "550px" }}>
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>First Name</label>
                     <div className='col-sm-4'>
-                        <input type="text" id="firstname" onChange={handleName} value={firstName} className='form-control' />
+                        <input type="text" onChange={changeInput} value={personInfo.firstName} name="firstName" className='form-control' />
                     </div>
                     {
                         firstNameError
@@ -108,7 +137,7 @@ const UserForm = (props) => {
                 <div className='form-group row bg-secondary p-1 m-1'>
                     <label className='col-sm-4 col-form-label'>Last Name</label>
                     <div className='col-sm-4'>
-                        <input type="text" id="lastname" onChange={handleName} value={lastName} className='form-control' />
+                        <input type="text" onChange={changeInput} value={personInfo.lastName} name="lastName" className='form-control' />
                     </div>
                     {
                         lastNameError

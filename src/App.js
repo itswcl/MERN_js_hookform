@@ -6,9 +6,14 @@ import UserForm from './components/UserForm';
 
 function App() {
   return (
-    <div className="container">
-      <UserForm />
-    </div>
+    <fieldset>
+      <div className='App'>
+        <legend>App</legend>
+        <div className="container">
+          <UserForm />
+        </div>
+      </div>
+    </fieldset>
   );
 }
 
